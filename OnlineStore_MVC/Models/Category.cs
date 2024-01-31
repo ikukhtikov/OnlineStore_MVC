@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore_MVC.Controllers
+namespace OnlineStore_MVC.Models
 {
     public class Category
     {
