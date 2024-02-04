@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore_MVC.Models
 {
@@ -7,6 +8,7 @@ namespace OnlineStore_MVC.Models
         [Key]
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        [DisplayName("Display Order")]
         public int DisplayOrder { get; set; }
 
     }

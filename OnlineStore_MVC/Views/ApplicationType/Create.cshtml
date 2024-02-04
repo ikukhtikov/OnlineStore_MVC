@@ -1,28 +1,18 @@
-﻿@model OnlineStore_MVC.Models.Category
+﻿@model OnlineStore_MVC.Models.ApplicationType
 
 <form method="post" asp-action="Create">
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-info p-lg-3">Add Category</h2>
+            <h2 class="text-info p-lg-3">Add Application Type</h2>
         </div>
         <div class="row">
             <div class="col-8">
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="CategoryName"></label>
+                        <label asp-for="Name"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="CategoryName" class="form-control"/>
-                    </div>
-
-                </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="DisplayOrder"></label>
-                    </div>
-                    <div class="col-8">
-                        <input asp-for="DisplayOrder" class="form-control" />
+                        <input asp-for="Name" class="form-control"/>
                     </div>
 
                 </div>
