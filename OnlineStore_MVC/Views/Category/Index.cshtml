@@ -5,8 +5,10 @@
         <div class="col-6">
             <h2 class="text-primary">Category List</h2>
         </div>
-        <div class="col-6">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-primary float-end">Создание новой категории</a>
+        <div class="col-6 text-right">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary float-end">
+                <i class="fa-solid fa-plus"></i> &nbsp; Создание новой категории
+            </a>
         </div>
     </div>
     <br /><br />
@@ -32,8 +34,12 @@
                         <td width="20%">@obj.DisplayOrder</td>
                         <td class="text-center">
                             <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Category" asp-route-Id="@obj.CategoryId" asp-action="Edit" class="btn btn-primary mx-2">Редактировать</a>
-                                <a asp-controller="Category" asp-route-Id="@obj.CategoryId" asp-action="Delete" class="btn btn-danger mx-2">Удалить</a>
+                                <a asp-controller="Category" asp-route-Id="@obj.CategoryId" asp-action="Edit" class="btn btn-primary mx-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a asp-controller="Category" asp-route-Id="@obj.CategoryId" asp-action="Delete" class="btn btn-danger mx-2">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>
