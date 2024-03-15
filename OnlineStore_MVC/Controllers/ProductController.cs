@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineStore_MVC.Data;
 using OnlineStore_MVC.Models;
+using OnlineStore_MVC.Models.ViewModels;
 
 namespace OnlineStore_MVC.Controllers
 {
@@ -29,30 +30,41 @@ namespace OnlineStore_MVC.Controllers
         // Метод GET - UPSERT
         public IActionResult Upsert(int? id) 
         {
-            IEnumerable<SelectListItem> CategoryDropDown = _db.Category.Select(i => new SelectListItem
-            {
-                Text=i.CategoryName,
-                Value = i.CategoryId.ToString()
-            });
+            //IEnumerable<SelectListItem> CategoryDropDown = _db.Category.Select(i => new SelectListItem
+            //{
+            //    Text=i.CategoryName,
+            //    Value = i.CategoryId.ToString()
+            //});
 
-            ViewBag.CategoryDropDown = CategoryDropDown;
-            
-            Product product = new Product();
+            //ViewBag.CategoryDropDown = CategoryDropDown;
+            //ViewData["CategoryDropDown"] = CategoryDropDown;
+
+            //Product product = new Product();
+
+            ProductVM productVM = new ProductVM()
+            {
+                Product = new Product(),
+                CategorySelectList = _db.Category.Select(i => new SelectListItem
+                {
+                    Text = i.CategoryName,
+                    Value = i.CategoryId.ToString()
+                })
+            };
+
             if (id == null)
             {
                 // this is for create
-                return View(product);
+                return View(productVM);
             }
             else
             {
-                product = _db.Product.Find(id);
-                if (product == null)
+                productVM.Product = _db.Product.Find(id);
+                if (productVM.Product == null)
                 {
                     return NotFound();
                 }
-                return View(product);
+                return View(productVM);
             }
-            return View();
         }
 
         // Метод POST для операции UPSERT (добавление в БД)
