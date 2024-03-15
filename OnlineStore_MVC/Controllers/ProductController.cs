@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineStore_MVC.Data;
 using OnlineStore_MVC.Models;
 
@@ -28,6 +29,14 @@ namespace OnlineStore_MVC.Controllers
         // Метод GET - UPSERT
         public IActionResult Upsert(int? id) 
         {
+            IEnumerable<SelectListItem> CategoryDropDown = _db.Category.Select(i => new SelectListItem
+            {
+                Text=i.CategoryName,
+                Value = i.CategoryId.ToString()
+            });
+
+            ViewBag.CategoryDropDown = CategoryDropDown;
+            
             Product product = new Product();
             if (id == null)
             {
