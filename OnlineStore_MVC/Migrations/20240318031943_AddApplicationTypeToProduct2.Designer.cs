@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore_MVC.Data;
 
@@ -10,9 +11,11 @@ using OnlineStore_MVC.Data;
 namespace OnlineStore_MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240318031943_AddApplicationTypeToProduct2")]
+    partial class AddApplicationTypeToProduct2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +68,7 @@ namespace OnlineStore_MVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationTypeId")
+                    b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -84,12 +87,9 @@ namespace OnlineStore_MVC.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("ShortDescription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationTypeId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("CategoryId");
 
@@ -100,7 +100,7 @@ namespace OnlineStore_MVC.Migrations
                 {
                     b.HasOne("OnlineStore_MVC.Models.ApplicationType", "ApplicationType")
                         .WithMany()
-                        .HasForeignKey("ApplicationTypeId")
+                        .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

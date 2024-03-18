@@ -22,12 +22,13 @@ namespace OnlineStore_MVC.Controllers
         }
         public IActionResult Index() 
         {
-            IEnumerable<Product> objList = _db.Product;
+            IEnumerable<Product> objList = _db.Product.Include(u => u.Category).Include(u => u.ApplicationType);
 
-            foreach(var obj in objList)
-            {
-                obj.Category = _db.Category.FirstOrDefault(u => u.CategoryId == obj.CategoryId);
-            };
+            //foreach(var obj in objList)
+            //{
+            //    obj.Category = _db.Category.FirstOrDefault(u => u.CategoryId == obj.CategoryId);
+            //    obj.ApplicationType = _db.ApplicationType.FirstOrDefault(u => u.Id == obj.ApplicationTypeId);
+            //};
 
             return View(objList);
         }
@@ -53,6 +54,11 @@ namespace OnlineStore_MVC.Controllers
                 {
                     Text = i.CategoryName,
                     Value = i.CategoryId.ToString()
+                }),
+                ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
 
@@ -141,6 +147,12 @@ namespace OnlineStore_MVC.Controllers
                 Value = i.CategoryId.ToString()
             });
 
+            productVM.ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+
 
             return View(productVM);
 
@@ -154,7 +166,7 @@ namespace OnlineStore_MVC.Controllers
                 return NotFound();
             }
 
-            Product product = _db.Product.Include(p => p.Category).FirstOrDefault(i => i.CategoryId == id);
+            Product product = _db.Product.Include(p => p.Category).Include(u => u.ApplicationType).FirstOrDefault(i => i.Id == id);
             //product.Category = _db.Category.Find(product.CategoryId);
 
             if (product == null)
