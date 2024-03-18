@@ -135,8 +135,13 @@ namespace OnlineStore_MVC.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
-            
+            productVM.CategorySelectList = _db.Category.Select(i => new SelectListItem
+            {
+                Text = i.CategoryName,
+                Value = i.CategoryId.ToString()
+            });
+
+
             return View(productVM);
 
         }
@@ -148,13 +153,16 @@ namespace OnlineStore_MVC.Controllers
             {
                 return NotFound();
             }
-            var obj = _db.Category.Find(id);
-            if (obj == null)
+
+            Product product = _db.Product.Include(p => p.Category).FirstOrDefault(i => i.CategoryId == id);
+            //product.Category = _db.Category.Find(product.CategoryId);
+
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(obj);
+            return View(product);
         }
 
         // Метод POST для операции DELETE (удаление строки в БД)
@@ -162,12 +170,22 @@ namespace OnlineStore_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.Category.Find(id);
+            var obj = _db.Product.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Category.Remove(obj);
+
+            string upload = _webHostEnvironment.WebRootPath + WC.ImagePath;
+
+            var oldFile = Path.Combine(upload, obj.ImageURL);
+
+            if (System.IO.File.Exists(oldFile))
+            {
+                System.IO.File.Delete(oldFile);
+            }
+
+            _db.Product.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
